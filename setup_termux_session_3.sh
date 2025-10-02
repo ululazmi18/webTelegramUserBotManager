@@ -17,7 +17,7 @@ echo "🐍 Setup Python packages untuk node-gyp..."
 pip install --upgrade setuptools wheel packaging || true
 
 echo "📦 Install nodemon global..."
-npm install -g nodemon
+npm install -g nodemon || true
 
 echo "📂 Masuk ke project..."
 cd ~/webTelegramUserBotManager
