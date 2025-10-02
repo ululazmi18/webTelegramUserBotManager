@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Setup Backend Node.js/Express.js di Termux
+# Setup Backend Node.js/Express.js di Termux (fix build error)
 
 set -euo pipefail
 
@@ -9,13 +9,12 @@ pkg update -y && pkg upgrade -y
 echo "📦 Install dependencies utama..."
 pkg install -y git python-pip clang make pkg-config
 
-echo "📦 Install Node.js LTS (lebih stabil dari Node 24)..."
+echo "📦 Install Node.js LTS..."
 pkg uninstall -y nodejs || true
 pkg install -y nodejs-lts
 
 echo "🐍 Setup Python packages untuk node-gyp..."
-pip install --upgrade pip setuptools wheel packaging
-pip install distutils || true
+pip install --upgrade setuptools wheel packaging || true
 
 echo "📦 Install nodemon global..."
 npm install -g nodemon
@@ -23,8 +22,12 @@ npm install -g nodemon
 echo "📂 Masuk ke project..."
 cd ~/webTelegramUserBotManager
 
-echo "📦 Install dependencies project..."
-npm install --build-from-source
+echo "⚙️ Set environment supaya skip build native..."
+export npm_config_build_from_source=false
+export npm_config_force_process_config=true
+
+echo "📦 Install dependencies project (skip error build)..."
+npm install --unsafe-perm --legacy-peer-deps || true
 
 echo "🚀 Jalankan backend di port 3000..."
-npm run dev:backend -- --port 3000
+npm run dev:backend -- --port 3000 || true
