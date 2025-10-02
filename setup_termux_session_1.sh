@@ -27,8 +27,8 @@ cat > "$REDIS_CONF" <<'EOF'
 port 6379
 daemonize yes
 protected-mode no
-save                  # non-aktifkan RDB snapshot (opsional)
-appendonly no         # non-aktifkan AOF (opsional)
+save ""              # non-aktifkan RDB snapshot
+appendonly no        # non-aktifkan AOF
 dir /data/data/com.termux/files/home
 logfile /data/data/com.termux/files/home/redis.log
 pidfile /data/data/com.termux/files/home/redis.pid
