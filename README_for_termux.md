@@ -22,6 +22,7 @@ cd webTelegramUserBotManager
 ```bash
 chmod +x setup_termux_session_1.sh
 chmod +x setup_termux_session_2.sh
+dos2unix setup_termux_session_3.sh
 chmod +x setup_termux_session_3.sh
 chmod +x setup_termux_session_4.sh
 ```
