@@ -22,4 +22,4 @@ if [ ! -d "node_modules" ]; then
 fi
 
 # Jalankan frontend di port 3001
-PORT=3001 npm start
+# PORT=3001 npm start
