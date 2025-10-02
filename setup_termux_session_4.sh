@@ -1,25 +1,29 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Setup Frontend React/Next.js di Termux
+# Setup Frontend React/Next.js di Termux (fix Node v24 issue)
 
-# Update & install tools
+set -euo pipefail
+
+echo "🔄 Update Termux..."
 pkg update -y && pkg upgrade -y
-pkg install -y nodejs git python-pip clang make build-essential
 
-# Pastikan setuptools & wheel ada (untuk node-gyp)
-pip install --upgrade pip setuptools wheel
+echo "📦 Install dependencies utama..."
+pkg uninstall -y nodejs || true
+pkg install -y nodejs-lts git python-pip clang make build-essential
 
+echo "🐍 Setup Python packages (untuk node-gyp)..."
+pip install --upgrade pip setuptools wheel packaging
+
+echo "📂 Masuk ke project..."
 cd ~/webTelegramUserBotManager
 
-# Install dependency root
-if [ ! -d "node_modules" ]; then
-  npm install || true
-fi
+echo "🧹 Bersihkan node_modules & reinstall..."
+rm -rf node_modules package-lock.json
+npm install --force
 
-# Masuk ke frontend dan install dep
+echo "📂 Masuk ke frontend..."
 cd frontend
-if [ ! -d "node_modules" ]; then
-  npm install
-fi
+rm -rf node_modules package-lock.json
+npm install --force
 
-# Jalankan frontend di port 3001
-# PORT=3001 npm start
+echo "🚀 Jalankan frontend di port 3001 (skip eslint)..."
+DISABLE_ESLINT_PLUGIN=true PORT=3001 npm start
